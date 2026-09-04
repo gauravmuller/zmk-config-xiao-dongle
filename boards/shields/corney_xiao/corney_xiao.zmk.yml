@@ -1,0 +1,14 @@
+file_format: "1"
+id: corney_xiao
+name: Corney Xiao
+type: shield
+url: https://github.com/gauravmuller/zmk-config-corney-promicro
+requires: [seeed_xiao]
+exposes: [i2c_oled]
+features:
+  - keys
+  - display
+  - studio
+siblings:
+  - corney_xiao_left
+  - corney_xiao_right

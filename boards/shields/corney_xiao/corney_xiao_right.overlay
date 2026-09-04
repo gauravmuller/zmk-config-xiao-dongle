@@ -1,0 +1,16 @@
+#include "corney_xiao.dtsi"
+
+&default_transform { // The matrix transform for this board is 6 columns over because the left half is 6 columns wide according to the matrix.
+    col-offset = <6>;
+};
+
+&kscan0 {
+    col-gpios
+        = <&gpio0 9 GPIO_ACTIVE_HIGH> // col5 -> PCB pad D14 -> XIAO NFC pad (P0.09)
+        , <&xiao_d 10 GPIO_ACTIVE_HIGH> // col4 -> PCB pad D15 -> XIAO D10
+        , <&xiao_d 3 GPIO_ACTIVE_HIGH>  // col3 -> PCB pad D18 -> XIAO D3
+        , <&xiao_d 2 GPIO_ACTIVE_HIGH>  // col2 -> PCB pad D19 -> XIAO D2
+        , <&xiao_d 1 GPIO_ACTIVE_HIGH>  // col1 -> PCB pad D20 -> XIAO D1
+        , <&xiao_d 0 GPIO_ACTIVE_HIGH>  // col0 -> PCB pad D21 -> XIAO D0
+        ;
+};
