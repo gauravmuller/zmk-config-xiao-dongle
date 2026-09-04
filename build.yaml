@@ -17,20 +17,30 @@
 #     cmake-args: -DCONFIG_ZMK_STUDIO=y
 #     artifact-name: corne_left_with_studio
 #
+---
 include:
-  - board: nice_nano_v2
-    shield: corney_promicro_left
-    snippet: studio-rpc-usb-uart
-    cmake-args: -DCONFIG_ZMK_STUDIO=y
-    artifact-name: corney_promicro_left_with_studio
-  - board: nice_nano_v2
-    shield: corney_promicro_right
-    artifact-name: corney_promicro_right_with_studio
+  # Left half -- peripheral. The Prospector dongle is central, so both
+  # halves are forced into the peripheral role regardless of the
+  # shield's own Kconfig.defconfig default.
   - board: seeeduino_xiao_ble
     shield: corney_xiao_left
-    snippet: studio-rpc-usb-uart
-    cmake-args: -DCONFIG_ZMK_STUDIO=y
-    artifact-name: corney_xiao_left_with_studio
+    cmake-args: -DCONFIG_ZMK_SPLIT=y -DCONFIG_ZMK_SPLIT_ROLE_CENTRAL=n
+    artifact-name: corney_xiao_left
+  # Right half -- peripheral.
   - board: seeeduino_xiao_ble
     shield: corney_xiao_right
-    artifact-name: corney_xiao_right_with_studio
+    cmake-args: -DCONFIG_ZMK_SPLIT=y -DCONFIG_ZMK_SPLIT_ROLE_CENTRAL=n
+    artifact-name: corney_xiao_right
+  # Prospector dongle -- central. Holds the keymap, pairs with both
+  # halves, and drives the Prospector display via the prospector_adapter
+  # shield. ZMK Studio lives here since this is the USB-connected part.
+  - board: seeeduino_xiao_ble
+    shield: corney_xiao_dongle prospector_adapter
+    snippet: studio-rpc-usb-uart
+    cmake-args: -DCONFIG_ZMK_STUDIO=y
+    artifact-name: corney_xiao_dongle
+  # Reset firmware -- flash to left, right, and dongle before first pairing
+  # (and any time you need to re-pair) so they can bond to each other cleanly.
+  - board: seeeduino_xiao_ble
+    shield: settings_reset
+    artifact-name: settings_reset
